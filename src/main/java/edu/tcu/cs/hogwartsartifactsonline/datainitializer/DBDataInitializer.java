@@ -11,9 +11,12 @@ import org.springframework.stereotype.Component;
 public class DBDataInitializer implements CommandLineRunner {
 
     private ArtifactDao artifactDao;
+    private WizardDao wizardDao;
 
-    public DBDataInitializer(ArtifactDao artifactDao) {
+    public DBDataInitializer(ArtifactDao artifactDao, WizardDao wizardDao) {
+
         this.artifactDao = artifactDao;
+        this.wizardDao = wizardDao;
     }
 
     @Override
@@ -53,13 +56,33 @@ public class DBDataInitializer implements CommandLineRunner {
         a6.setName("Ressurection Stone");
         a6.setDescription("The Deluminator, also referred to as a \"Put-Outer\", is a small magical device that looks like a cigarette lighter. It captures and stores a light source, like a streetlight, and can later be used to restore the light to its original place.");
         a6.setImageUrl("imageUrl");
-        artifactDao.save(a1);
-        artifactDao.save(a2);
-        artifactDao.save(a3);
-        artifactDao.save(a4);
-        artifactDao.save(a5);
-        artifactDao.save(a6);
+//        artifactDao.save(a1);
+//        artifactDao.save(a2);
+//        artifactDao.save(a3);
+//        artifactDao.save(a4);
+//        artifactDao.save(a5);
+//        artifactDao.save(a6);
 
+        Wizard w1 = new Wizard();
+        w1.setName("Albus Dumbledore");
+        w1.addArtifact(a1);
+        w1.addArtifact(a3);
+
+        Wizard w2 = new Wizard();
+        w2.setName("Harry Potter");
+        w2.addArtifact(a2);
+        w2.addArtifact(a4);
+
+        Wizard w3 = new Wizard();
+        w3.setName("Neville Longbottom");
+        w3.addArtifact(a5);
+
+        wizardDao.save(w1);
+        wizardDao.save(w2);
+        wizardDao.save(w3);
+        //sinze a6 doesnt have an owner yet, need to save it explicitly here
+        artifactDao.save(a6);
     }
 
 }
+
